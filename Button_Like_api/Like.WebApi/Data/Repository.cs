@@ -17,17 +17,17 @@ namespace Like.WebApi.Data
             this._likeContextDb = likeContextDb;
         }
 
-        public int GetCountLikes(int idArticle)
+        public async Task<int> GetCountLikes(int idArticle)
         {
-           var count =  _likeContextDb.Likes.Count(x => x.IdArticle == idArticle);
+           var count = await Task.Run(() =>  _likeContextDb.Likes.Count(x => x.IdArticle == idArticle));
 
             return count;
         }
 
-        public bool InsertLike(LikeArticle like)
+        public async Task<bool> InsertLike(LikeArticle like)
         {
             _likeContextDb.Add(like);
-            if(_likeContextDb.SaveChanges() > 0)
+            if(await Task.Run(()=> _likeContextDb.SaveChanges() > 0))
             {
                 return true;
             }
@@ -37,14 +37,14 @@ namespace Like.WebApi.Data
             }
         }
 
-        public bool VerifyLike(LikeArticle like)
+        public async  Task<bool>  VerifyLike(LikeArticle like)
         {
-            return _likeContextDb.Likes.Where(x => x.IdUser == like.IdUser && x.IdArticle == like.IdArticle).Any();
+            return await Task.Run(()=> _likeContextDb.Likes.Where(x => x.IdUser == like.IdUser && x.IdArticle == like.IdArticle).Any());
         }
 
-        public bool VerifyUser(string username)
+        public async Task<bool> VerifyUser(string username)
         {
-             return  _applicationDbContext.Users.Where(x => x.UserName == username).Any();
+             return await Task.Run(()=> _applicationDbContext.Users.Where(x => x.UserName == username).Any());
         }
     }
 }

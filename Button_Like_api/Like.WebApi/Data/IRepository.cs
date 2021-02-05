@@ -1,15 +1,15 @@
 ﻿using Like.WebApi.Models;
-
+using System.Threading.Tasks;
 
 namespace Like.WebApi.Data
 {
     public interface IRepository
     {     
 
-        bool VerifyUser(string username);
-        bool InsertLike(LikeArticle like);
-        bool VerifyLike(LikeArticle like);
-        int GetCountLikes(int idArticle);
+        Task<bool> VerifyUser(string username);
+        Task<bool> InsertLike(LikeArticle like);
+        Task<bool> VerifyLike(LikeArticle like);
+        Task<int> GetCountLikes(int idArticle);
       
     }
 }

@@ -24,11 +24,11 @@ namespace Like.WebApi.Controllers
 
         [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpGet("{idArticle}")]
-        public ActionResult<int> Get(int idArticle)
+        public async Task<ActionResult<int>> Get(int idArticle)
         {
             try
             {
-                return _repository.GetCountLikes(idArticle);
+                return await _repository.GetCountLikes(idArticle);
             }
             catch (Exception ex)
             {
@@ -38,11 +38,11 @@ namespace Like.WebApi.Controllers
 
         [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpPost]
-        public ActionResult<bool> Post(LikeArticle like)
+        public async Task<ActionResult<bool>> Post(LikeArticle like)
         {
-            if (!_repository.VerifyLike(like))
+            if (! await _repository.VerifyLike(like))
             {
-                if (_repository.InsertLike(like))
+                if (await _repository.InsertLike(like))
                 {
                     return true;
                 }

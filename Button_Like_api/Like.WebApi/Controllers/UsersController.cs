@@ -36,9 +36,9 @@ namespace Like.WebApi.Controllers
        
 
         [HttpGet("VerifyUser/{username}")]
-        public  ActionResult<bool> VerifyUser(string username)
+        public async Task<ActionResult<bool>> VerifyUser(string username)
         {
-            if (_repository.VerifyUser(username))
+            if (await _repository.VerifyUser(username))
             {
                 return Ok();
             }
